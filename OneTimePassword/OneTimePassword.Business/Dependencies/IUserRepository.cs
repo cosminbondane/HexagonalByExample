@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace OneTimePassword.Business.Dependencies
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository
     {
         User GetByUsername(string username);
+
+        bool Update(User user);
     }
 }

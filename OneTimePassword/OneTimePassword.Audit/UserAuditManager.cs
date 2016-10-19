@@ -12,7 +12,7 @@ namespace OneTimePassword.Audit
     {
         public void LoginFailed(string username, LoginFailedReason reason)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

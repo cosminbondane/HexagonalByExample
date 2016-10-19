@@ -1,18 +1,36 @@
 ﻿using OneTimePassword.Business.Dependencies;
 using OneTimePassword.Domain.Entities;
 using System;
-using System.Collections.Generic;
+using System.Data.SqlClient;
+using Dapper.FastCrud;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OneTimePassword.Repository
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : IUserRepository
     {
         public User GetByUsername(string username)
         {
-            throw new NotImplementedException();
+            User user = null;
+            using (SqlConnection connection = new SqlConnection())
+            {
+                user = connection.Get(new User { Username = username });
+            }
+
+            return user;
+        }
+
+        public bool Update(User user)
+        {
+            if (user == null)
+            {
+                return false;
+            }
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                return connection.Update(user);
+            }
         }
     }
 }
