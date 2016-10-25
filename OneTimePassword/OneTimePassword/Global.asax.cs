@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OneTimePassword.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,7 @@ namespace OneTimePassword
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             UnityConfig.RegisterComponents();
+            RepositorySetup.Register();
         }
     }
 }

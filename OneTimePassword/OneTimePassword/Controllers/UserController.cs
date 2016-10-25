@@ -17,9 +17,16 @@ namespace OneTimePassword.Controllers
         }
 
         [HttpGet]
-        public bool Get()
+        public string CreatePassword(string username)
         {
-            return true;
+            try
+            {
+                var result = _userBusiness.CreatePassword(username);
+                return result.Password;
+            }
+            catch (Exception ex) { }
+
+            return string.Empty;
         }
     }
 }
