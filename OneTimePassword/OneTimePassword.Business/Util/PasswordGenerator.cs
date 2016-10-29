@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneTimePassword.Business
+namespace OneTimePassword.Business.Util
 {
     public class PasswordGenerator
     {

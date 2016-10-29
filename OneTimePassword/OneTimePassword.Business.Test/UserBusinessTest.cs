@@ -13,7 +13,7 @@ namespace OneTimePassword.Business.Test
 {
     public class UserBusinessTest
     {
-        Mock<IUserRepository> mockUserRepository = new Mock<IUserRepository>();
+        Mock<IUserService> mockUserRepository = new Mock<IUserService>();
         Mock<IUserAudit> mockAudit = new Mock<IUserAudit>();
 
         public UserBusinessTest()
@@ -116,6 +116,12 @@ namespace OneTimePassword.Business.Test
             bool success = business.Login("myusername3", "mypass");
 
             Assert.Equal(false, success);
+        }
+
+        [Fact]
+        public void Should_Get_User_Info()
+        {
+
         }
     }
 }

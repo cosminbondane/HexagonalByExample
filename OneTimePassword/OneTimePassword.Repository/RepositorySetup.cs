@@ -17,13 +17,24 @@ namespace OneTimePassword.Repository
             OrmConfiguration.DefaultDialect = SqlDialect.MsSql;
 
             SetupUser();
+            SetupRole();
         }
 
         private static void SetupUser()
         {
             OrmConfiguration.GetDefaultEntityMapping<User>()
                 .SetTableName("User")
-                .SetProperty(user => user.UserId,
+                .SetProperty(user => user.Id,
+                    prop => prop.SetPrimaryKey().SetDatabaseGenerated(DatabaseGeneratedOption.Identity))
+                .SetProperty(user => user.RoleId,
+                    prop => prop.SetChildParentRelationship<Role>("Role"));
+        }
+
+        private static void SetupRole()
+        {
+            OrmConfiguration.GetDefaultEntityMapping<Role>()
+                .SetTableName("Role")
+                .SetProperty(role => role.Id,
                     prop => prop.SetPrimaryKey().SetDatabaseGenerated(DatabaseGeneratedOption.Identity));
         }
     }

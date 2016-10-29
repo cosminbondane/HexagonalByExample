@@ -14,11 +14,11 @@ namespace OneTimePassword
         {
 			var container = new UnityContainer();
 
-            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IUserService, UserService>();
             container.RegisterType<IUserAudit, UserAuditManager>();
 
             container.RegisterInstance(new UserBusiness(
-                container.Resolve<IUserRepository>(), 
+                container.Resolve<IUserService>(), 
                 container.Resolve<IUserAudit>()));
             
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

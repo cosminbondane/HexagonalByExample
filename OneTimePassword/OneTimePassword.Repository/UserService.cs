@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace OneTimePassword.Repository
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    public class UserService : BaseRepository<User>, IUserService
     {
         public User GetByUsername(string username)
         {
@@ -22,17 +22,18 @@ namespace OneTimePassword.Repository
             return user;
         }
 
-        public bool Update(User user)
+        public User GetInfoByUsername(string username)
         {
-            if (user == null)
-            {
-                return false;
-            }
-
+            User user = null;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                return connection.Update(user);
+                user = connection.Find<User>(statement => statement
+                    .Where($"{nameof(User.Username):C}=@Username")
+                    .Include<Role>(join => join.InnerJoin())
+                    .WithParameters(new { Username = username })).FirstOrDefault();
             }
+
+            return user;
         }
     }
 }

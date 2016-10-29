@@ -1,4 +1,6 @@
 ﻿using OneTimePassword.Business;
+using OneTimePassword.Domain.Entities;
+using OneTimePassword.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +18,31 @@ namespace OneTimePassword.Controllers
             _userBusiness = userBusiness;
         }
 
+        //[HttpGet]
+        //public string CreatePassword(string username)
+        //{
+        //    try
+        //    {
+        //        var result = _userBusiness.CreatePassword(username);
+        //        return result.Password;
+        //    }
+        //    catch (Exception ex) { }
+
+        //    return string.Empty;
+        //}
+
         [HttpGet]
-        public string CreatePassword(string username)
+        public UserInfo GetUserInfo(string username)
         {
             try
             {
-                var result = _userBusiness.CreatePassword(username);
-                return result.Password;
+               return _userBusiness
+                    .GetInfo(username)
+                    .ToUserInfo();
             }
             catch (Exception ex) { }
 
-            return string.Empty;
+            return null;
         }
     }
 }

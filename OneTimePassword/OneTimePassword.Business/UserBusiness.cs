@@ -1,4 +1,5 @@
 ﻿using OneTimePassword.Business.Dependencies;
+using OneTimePassword.Business.Util;
 using OneTimePassword.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,23 +13,23 @@ namespace OneTimePassword.Business
     {
         private const int ExpirationTime = 30;
 
-        public IUserRepository UserRepository;
+        public IUserService UserService;
 
         public IUserAudit Audit;
 
         private PasswordGenerator Password = new PasswordGenerator();
 
         public UserBusiness(
-            IUserRepository UserRepository,
+            IUserService UserService,
             IUserAudit Audit)
         {
-            this.UserRepository = UserRepository;
+            this.UserService = UserService;
             this.Audit = Audit;
         }
 
         public User FindUser(string username)
         {
-            return UserRepository.GetByUsername(username);
+            return UserService.GetByUsername(username);
         }
 
         public User CreatePassword(string username)
@@ -41,7 +42,7 @@ namespace OneTimePassword.Business
 
             user.Password = Password.GenerateUnique();
             user.PasswordExpiration = DateTime.UtcNow.AddSeconds(ExpirationTime);
-            UserRepository.Update(user);
+            UserService.Update(user);
 
             return user;
         }
@@ -68,6 +69,11 @@ namespace OneTimePassword.Business
             }
 
             return true;
+        }
+
+        public User GetInfo(string username)
+        {
+            return UserService.GetInfoByUsername(username);
         }
     }
 }
