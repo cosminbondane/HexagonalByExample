@@ -1,5 +1,5 @@
 ﻿using OneTimePassword.Business;
-using OneTimePassword.Domain.Entities;
+using OneTimePassword.Extensions;
 using OneTimePassword.Models;
 using System;
 using System.Collections.Generic;

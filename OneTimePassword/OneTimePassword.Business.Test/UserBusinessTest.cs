@@ -41,6 +41,17 @@ namespace OneTimePassword.Business.Test
                        PasswordExpiration = DateTime.UtcNow.AddSeconds(-30)
                    };
                });
+
+            mockUserRepository
+                .Setup(f => f.GetInfoByUsername("myusername"))
+                .Returns(() =>
+                {
+                    return new User
+                    {
+                        Id = 10,
+                        Role = new Role { Id = 23 }
+                    };
+                });
         }
 
         [Fact]
@@ -121,7 +132,14 @@ namespace OneTimePassword.Business.Test
         [Fact]
         public void Should_Get_User_Info()
         {
+            UserBusiness business = new UserBusiness(
+                mockUserRepository.Object,
+                mockAudit.Object);
 
+            User result = business.GetInfo("myusername");
+
+            Assert.Equal(10, result.Id);
+            Assert.Equal(23, result.Role.Id);
         }
     }
 }

@@ -12,16 +12,4 @@ namespace OneTimePassword.Models
 
         public string Role { get; set; }
     }
-
-    public static class UserExtensions
-    {
-        public static UserInfo ToUserInfo(this User user)
-        {
-            return new UserInfo
-            {
-                Role = user?.Role?.Name,
-                Username = user.Username
-            };
-        }
-    }
 }
